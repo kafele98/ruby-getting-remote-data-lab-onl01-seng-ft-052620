@@ -1,17 +1,24 @@
+require 'net/http'
+require 'open-uri'
+require 'json'
 
 
 class GetRequester 
   
-  def initialize
-    @url = URL 
+  def initialize(response)
+    @url = response
   end 
   
   def get_response_body 
     uri = URI.parse(@url)
-    response = Net::HTTP.get_response.uri 
+    response = Net::HTTP.get_response(uri) 
     response.body 
   end
   
+  def parse_json 
+    
+    JSON.parse(get_response_body)
+  end 
 end 
 
 programs = GetRequester.new.get_programs 
